@@ -4,6 +4,7 @@ import manager.ToDoManager;
 import model.ToDo;
 import model.ToDoStatus;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,24 +18,31 @@ import java.text.SimpleDateFormat;
 public class AddToDoServlet extends HttpServlet {
 
     ToDoManager toDoManager = new ToDoManager();
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String title = req.getParameter("title");
         String deadline = req.getParameter("deadline");
+        String status = req.getParameter("status");
+        String userID = req.getParameter("userID");
         ToDo todo = null;
         try {
-            todo = ToDo.builder()
-                    .title(title)
-                    .deadline(sdf.parse(deadline))
-                    .status(ToDoStatus.TODO)
-                    .build();
+            try {
+                todo = ToDo.builder()
+                        .title(title)
+                        .deadline(sdf.parse(deadline))
+                        .status(ToDoStatus.valueOf(status) )
+                        .userId(Integer.parseInt(userID))
+                        .build();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             toDoManager.create(todo);
 
-        } catch (ParseException e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/home");
+        resp.sendRedirect("/adminHome");
     }
 }
