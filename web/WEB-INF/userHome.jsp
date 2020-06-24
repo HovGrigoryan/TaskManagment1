@@ -15,12 +15,11 @@
     List<ToDo> toDos = (List<ToDo>) request.getAttribute("tasks");
     if (toDos == null) {
 %>
-
-
-
 <h3>ToDo list is empty</h3>
 <% } else { %>
-Welcome <%= user.getName() %> <%= user.getSurname() %>
+Welcome  <%= user.getName()%> <% if (user.getPictureUrl() != null) {%>
+<img src="/image?path=<%=user.getPictureUrl()%>" width="50"/> <%}%>
+
 <table border="1">
     <tr>
         <td>Id</td>
@@ -29,6 +28,7 @@ Welcome <%= user.getName() %> <%= user.getSurname() %>
         <td>status</td>
         <td>userID</td>
         <td>created date</td>
+        <th>Update Status</th>
     </tr>
 
     <% for (ToDo todo : toDos) { %>
@@ -44,6 +44,16 @@ Welcome <%= user.getName() %> <%= user.getSurname() %>
         <td><%=todo.getUserId()%>
         </td>
         <td><%=todo.getCreatedDate()%>
+        </td>
+        <td>
+            <form action="/changeToDoStatus" method="post">
+                <input type="hidden" name="toDoId" value="<%=todo.getId()%>">
+                <select name="status">
+                    <option value="TODO">TODO</option>
+                    <option value="INPROGRESS">INPROGRESS</option>
+                    <option value="FINISHED">FINISHED</option>
+                </select><input type="submit" value="OK">
+            </form>
         </td>
         <%--        <td><a href="/userDetail?userId=<%=user.getId()%>">User Detail</a></td>--%>
 

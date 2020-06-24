@@ -1,8 +1,10 @@
 package servlet;
 
 import manager.ToDoManager;
-import manager.UserManager;
+import manager.ToDoManager;
+import model.ToDoStatus;
 import model.User;
+import model.UserStatus;
 import model.UserStatus;
 
 import javax.servlet.ServletException;
@@ -12,24 +14,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(urlPatterns = "/adminHome")
-public class AdminHomeServlet extends HttpServlet {
-    private UserManager userManager = new UserManager();
-    private ToDoManager toDoManager = new ToDoManager();
+@WebServlet(urlPatterns = "/changeToDoStatus")
+public class ChangeToDoStatus extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        List<User> allUsers = userManager.getAllUsers();
-        if (user.getStatus() != UserStatus.MANAGER) {
-            resp.sendRedirect("/index.jsp");
-        } else {
-            req.setAttribute("users", allUsers);
-            req.setAttribute("tasks", toDoManager.getAll());
-            req.getRequestDispatcher("WEB-INF/adminHome.jsp").forward(req, resp);
+        int toDoId = Integer.parseInt((req.getParameter("toDoId")));
+        ToDoStatus todoStatus = ToDoStatus.valueOf(req.getParameter("status"));
+
+        ToDoManager toDoManager = new ToDoManager();
+        toDoManager.update(toDoId,todoStatus);
+        if (user.getStatus() == UserStatus.MANAGER){
+            resp.sendRedirect("/managerHome");
+        }else {
+            resp.sendRedirect("/userHome");
         }
+
     }
 }
