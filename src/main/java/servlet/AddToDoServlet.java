@@ -32,7 +32,7 @@ public class AddToDoServlet extends HttpServlet {
                 todo = ToDo.builder()
                         .title(title)
                         .deadline(sdf.parse(deadline))
-                        .status(ToDoStatus.valueOf(status) )
+                        .status(ToDoStatus.valueOf(status))
                         .userId(Integer.parseInt(userID))
                         .build();
             } catch (ParseException e) {

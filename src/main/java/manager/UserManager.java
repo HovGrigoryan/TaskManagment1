@@ -52,6 +52,8 @@ public class UserManager {
         return null;
     }
 
+
+
     public User getUserByEmailAndPassword(String email, String password) {
         String sql = "SELECT * FROM user WHERE email = ? and password = ?";
         try {

@@ -35,8 +35,8 @@ Welcome  <%= user.getName()%> <% if (user.getPictureUrl() != null) {%>
     <tr>
         <td><%=todo.getId()%>
         </td>
-        <td><%=todo.getTitle()%>
-        </td>
+        <td><a href="/comment?id=<%=todo.getId()%>"><%=todo.getTitle()%>
+        </a></td>
         <td><%=todo.getDeadline()%>
         </td>
         <td><%=todo.getStatus()%>
@@ -63,9 +63,6 @@ Welcome  <%= user.getName()%> <% if (user.getPictureUrl() != null) {%>
 
 </table>
 <% } %>
-
-
-
 
 
 <br> <a href="/logout">Logout</a>
