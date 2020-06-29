@@ -97,6 +97,18 @@ public class CommentManager {
         return comments;
     }
 
+    public boolean deleteComment(int id) {
+        String sql = "DELETE FROM comment  WHERE id = " + id;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public List<Comment> getAllCommentByTaskId(int taskId) {
         List<Comment> comments = new ArrayList<Comment>();
         String sql = "SELECT * FROM comment WHERE task_id = ?";

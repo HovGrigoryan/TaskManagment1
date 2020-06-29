@@ -119,7 +119,7 @@ Add ToDo:
         <%
             for (ToDo toDo : toDos) { %>
         <tr>
-            <td><%=toDo.getTitle()%>
+            <td><a href="/comment?id=<%=toDo.getId()%>"><%=toDo.getTitle()%>
             </td>
             <td><%=toDo.getDeadline()%>
             </td>

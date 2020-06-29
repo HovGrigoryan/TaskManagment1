@@ -2,10 +2,8 @@ package servlet;
 
 import manager.CommentManager;
 import manager.ToDoManager;
-import manager.UserManager;
 import model.Comment;
 import model.ToDo;
-import model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +20,7 @@ public class CommentServlet extends HttpServlet {
     CommentManager commentManager = new CommentManager();
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
         int todoID = Integer.parseInt(id);
         ToDo byID = toDoManager.getByID(todoID);
